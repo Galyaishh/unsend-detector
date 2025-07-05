@@ -2,56 +2,63 @@ package com.example.unsenddetector.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.unsenddetector.R
-import com.example.unsenddetector.data.DeletedMessageDatabase
 import com.example.unsenddetector.utilis.UsageStatsUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import android.provider.Settings
+import android.content.Context
+import android.provider.Settings.Secure
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.WindowCompat
+import androidx.fragment.app.commit
+import com.example.unsenddetector.ui.UsersFragment
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        if (!hasAllPermissions()) {
+            showPermissionsDialog()
+        } else {
+            loadUsersFragment()
         }
+    }
 
-        // בדיקה: האם יש הרשאה ל־Usage Stats?
-        if (!UsageStatsUtils.hasUsageStatsPermission(this)) {
-            UsageStatsUtils.requestUsageStatsPermission(this)
-        }
+    private fun hasAllPermissions(): Boolean {
+        return isNotificationListenerEnabled() && UsageStatsUtils.hasUsageStatsPermission(this)
+    }
 
-        // בדיקה: האם יש הרשאה ל־Notification Listener
-        if (!isNotificationListenerEnabled()) {
-            startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
-        }
-
-        // קריאת הודעות שנמחקו לבדיקה
-        CoroutineScope(Dispatchers.IO).launch {
-            val deletedMessages = DeletedMessageDatabase.getDatabase(this@MainActivity)
-                .deletedMessageDao()
-                .getAll()
-
-            deletedMessages.forEach {
-                Log.d("ROOM", "${it.title}: ${it.text}")
+    private fun showPermissionsDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("נדרשות הרשאות")
+            .setMessage("כדי לזהות הודעות שנמחקו, יש להפעיל הרשאות:\n• גישה להתראות\n• גישה לשימוש באפליקציות")
+            .setPositiveButton("אישור") { _, _ ->
+                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                UsageStatsUtils.requestUsageStatsPermission(this)
             }
+            .setNegativeButton("בטל", null)
+            .setOnDismissListener {
+                if (hasAllPermissions()) {
+                    loadUsersFragment()
+                }
+            }
+            .show()
+    }
+
+    private fun loadUsersFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container_view, UsersFragment())
         }
     }
 
     private fun isNotificationListenerEnabled(): Boolean {
-        val enabledListeners = android.provider.Settings.Secure.getString(
-            contentResolver,
-            "enabled_notification_listeners"
-        )
+        val enabledListeners = Secure.getString(contentResolver, "enabled_notification_listeners")
         return enabledListeners?.contains(packageName) == true
     }
 }
+

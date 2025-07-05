@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/users_TXT_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Instagram Users"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/users_RV_list"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_RV_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/users_TXT_title"
+        tools:listitem="@layout/user_item"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

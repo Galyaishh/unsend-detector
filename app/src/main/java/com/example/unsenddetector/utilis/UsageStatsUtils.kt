@@ -12,9 +12,6 @@ import android.os.Process
 
 object UsageStatsUtils {
 
-    /**
-     * בודק האם יש הרשאה ל־Usage Stats
-     */
     fun hasUsageStatsPermission(context: Context): Boolean {
         val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         val mode = appOps.checkOpNoThrow(
@@ -24,19 +21,12 @@ object UsageStatsUtils {
         )
         return mode == AppOpsManager.MODE_ALLOWED
     }
-
-    /**
-     * פותח את מסך ההרשאות ל־Usage Stats אם אין הרשאה
-     */
     fun requestUsageStatsPermission(context: Context) {
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 
-    /**
-     * בודק אם אינסטגרם נפתחה לאחרונה (withinMillis = זמן בשניות)
-     */
     fun wasInstagramOpenedRecently(context: Context, withinMillis: Long = 4000): Boolean {
         val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val endTime = System.currentTimeMillis()
