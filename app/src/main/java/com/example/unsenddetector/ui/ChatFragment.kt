@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.unsenddetector.MyApp
+import com.example.unsenddetector.R
 import com.example.unsenddetector.databinding.FragmentChatBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +43,7 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.chatRV.layoutManager = LinearLayoutManager(requireContext()).apply {
-            reverseLayout = false      // סדר רגיל (ישנות למעלה, חדשות למטה)
+            reverseLayout = false      // new messages at the bottom
             stackFromEnd = false
         }
         binding.chatRV.adapter = adapter
@@ -62,7 +63,7 @@ class ChatFragment : Fragment() {
             }
         }
 
-        binding.chatTXTTitle.text = "Deleted Messages By $userName"
+        binding.chatTXTTitle.text = getString(R.string.deleted_messages_by, userName)
     }
 
     override fun onDestroyView() {

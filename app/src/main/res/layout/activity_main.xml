@@ -1,6 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_container_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"/>
+    android:layout_height="match_parent">
+
+    <!-- Fragment container -->
+    <FrameLayout
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Permissions explanation layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/permissions_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/perm_IMG_logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_app"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="60dp" />
+
+        <TextView
+            android:id="@+id/perm_TXT_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/unsend_detector"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/perm_IMG_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/perm_TXT_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/to_detect_deleted_instagram_messages_please_enable"
+            android:textSize="16sp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/perm_TXT_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/perm_TXT_bullets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_access_usage_access"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/perm_TXT_description"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/perm_TXT_disclaimer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/works_only_if_the_chat_wasn_t_opened_yet_in_instagram"
+            android:textSize="14sp"
+            android:textColor="#888888"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/perm_TXT_bullets"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/perm_BTN_grant"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/grant_permissions"
+            app:layout_constraintTop_toBottomOf="@id/perm_TXT_disclaimer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

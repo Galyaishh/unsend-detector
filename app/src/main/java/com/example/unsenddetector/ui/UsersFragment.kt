@@ -32,7 +32,7 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = UsersAdapter { selectedUser ->
-            // מעבר לצ׳אט עם המשתמש
+            // Transfer to user chat
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container_view, ChatFragment.newInstance(selectedUser))
                 .addToBackStack(null)
@@ -41,6 +41,10 @@ class UsersFragment : Fragment() {
 
         binding.usersRVList.layoutManager = LinearLayoutManager(requireContext())
         binding.usersRVList.adapter = adapter
+        binding.usersSwipeRefresh.setOnRefreshListener {
+            loadUsers()
+        }
+
         loadUsers()
     }
 
@@ -54,10 +58,14 @@ class UsersFragment : Fragment() {
                 .distinct()
 
             withContext(Dispatchers.Main) {
-                adapter.submitList(distinctUsers)
+                _binding?.let {
+                    adapter.submitList(distinctUsers)
+                    it.usersSwipeRefresh.isRefreshing = false
+                }
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

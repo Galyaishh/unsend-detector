@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Unsend Detector</string>
+    <string name="deleted_messages_by">Deleted Messages By %1$s</string>
+    <string name="user_name">User name</string>
+    <string name="deleted_messages">Deleted Messages</string>
+    <string name="deleted_message_content">Deleted message content</string>
+    <string name="to_detect_deleted_instagram_messages_please_enable">To detect deleted Instagram messages, please enable:</string>
+    <string name="notification_access_usage_access">• Notification Access\n• Usage Access</string>
+    <string name="works_only_if_the_chat_wasn_t_opened_yet_in_instagram">⚠ Works only if the chat wasn’t opened yet in Instagram</string>
+    <string name="grant_permissions">Grant Permissions</string>
+    <string name="unsend_detector">Unsend Detector</string>
 </resources>

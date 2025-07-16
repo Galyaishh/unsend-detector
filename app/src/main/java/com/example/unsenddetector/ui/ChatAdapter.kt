@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.unsenddetector.data.DeletedMessageEntity
 import com.example.unsenddetector.databinding.MessageItemBinding
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
 
@@ -32,6 +35,11 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.MessageViewHolder>() {
 
         fun bind(message: DeletedMessageEntity) {
             binding.messageTXTBubble.text = message.text
+
+            val formattedTime = SimpleDateFormat("HH:mm", Locale.getDefault())
+                .format(Date(message.timestamp))
+
+            binding.messageTXTTime.text = formattedTime
         }
     }
 }

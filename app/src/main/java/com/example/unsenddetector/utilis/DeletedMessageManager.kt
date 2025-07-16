@@ -24,7 +24,7 @@ class DeletedMessageManager(private val context: Context) {
     fun handleInstagramNotificationUpdate(sbn: StatusBarNotification, reason: Int? = null) {
         if (sbn.packageName != "com.instagram.android") return
 
-        val threadKey = sbn.groupKey // אפשר גם לבנות מזהה ייחודי אחר אם צריך
+        val threadKey = sbn.groupKey
         val notif = sbn.notification
         val current = extractInstagramMessages(notif)
         val previous = lastMessages[threadKey] ?: emptyList()
@@ -35,7 +35,7 @@ class DeletedMessageManager(private val context: Context) {
 
         removed.forEach {
             if ( (reason == null || reason == NotificationListenerService.REASON_APP_CANCEL) && !wasInstagramOpenedRecently()) {
-                Log.d("DeletedMsgManager", "🧨 Deleted: ${it.from} - ${it.text}")
+                Log.d("DeletedMsgManager", "Deleted: ${it.from} - ${it.text}")
                 saveToDatabase(threadKey, it)
             } else {
                 Log.d("DeletedMsgManager", "Ignored removal. Reason=$reason")
