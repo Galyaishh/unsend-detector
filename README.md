@@ -53,5 +53,5 @@ This app does not intercept or store messages from Instagram directly. It only o
 
 This project is intended for academic purposes. Not for commercial use.
 
-[![Watch the video]([https://www.youtube.com/watch?v=VIDEO_ID](https://youtu.be/sqSuuHmXu-4))
+[![Watch the video](https://img.youtube.com/vi/sqSuuHmXu-4/hqdefault.jpg)](https://youtu.be/sqSuuHmXu-4)
 
