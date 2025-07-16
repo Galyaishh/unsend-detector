@@ -30,7 +30,6 @@ Unsend Detector is an Android application that detects and displays deleted (uns
 - Room Database
 - NotificationListenerService
 - UsageStatsManager
-- ChatKit (for UI message rendering)
 - Material Design 3
 
 ## Installation
@@ -43,7 +42,7 @@ Unsend Detector is an Android application that detects and displays deleted (uns
 ## Limitations
 
 - Only works with Instagram bubble notifications.
-- May not capture every deleted message if the app does not receive the notification.
+- May not capture every deleted message if the app does not receive the notification (e.g., if Instagram was in use at the same moment).
 - Does not support other messaging apps (e.g., WhatsApp, Messenger).
 
 ## Disclaimer
